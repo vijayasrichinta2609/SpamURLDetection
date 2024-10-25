@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Spam Detector</title>
+    <!-- CSS Files -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans&display=swap" rel="stylesheet">
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/bootstrap-icons.css" rel="stylesheet">
+    <link href="static/css/templatemo-topic-listing.css" rel="stylesheet">
+     <link href="static/css/style.css" rel="stylesheet">
+<style>
+    .table-responsive {
+    max-height: 400px; /* Adjust based on your needs */
+    overflow-y: auto;  /* Enables vertical scrolling */
+    overflow-x: hidden; /* Keeps the horizontal overflow hidden */
+}
+</style>
+</head>
+<body id="top">
+
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <i class="bi bi-shield-lock"></i>
+            <span>Spam Detector</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+             <ul class="navbar-nav ms-lg-5 me-lg-auto">
+            <li class="nav-item">
+                <a class="nav-link" id="history" href="#section_2">History</a>
+                    <span class="navbar-text">
+                        Welcome, {{ username }}
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<section class="hero-section d-flex justify-content-center align-items-center" id="section_1">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-8 col-12 mx-auto">
+                <h1 class="text-white text-center">Protect Your Browsing</h1>
+                <h6 class="text-center">An AI tool to check the safety of URLs</h6><br>
+                <form id="submissionForm" method="post" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="fileUpload" style="font-weight: bold;">Upload URL List (CSV file):&nbsp;</label>
+                    <input type="file" class="form-control-file" id="fileUpload" name="fileUpload"><br><h5>OR</h5>
+
+                    <input type="text" class="form-control" id="url" placeholder="Enter URL to check..." name="url">
+                    <div class="invalid-feedback">Please enter a valid URL in the form of example.com, www.example.com, http://example.com, or https://example.com
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary" name="url_check">Check</button>
+                </div>
+            </form>
+
+        </div>
+        <div id="result" class="text-center">
+            <h3>Result: <span id="result-text"></span></h3><br>
+             {% if location_info %}
+            <table class="table text-left">
+                <thead>
+                    <tr>
+                        <th style="width: 20%;"></th>
+
+                        <th style="width: 80%;">Details</th>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                                  {% for key, value in location_info.items %}
+                    <tr>
+                        <th scope="row" class="text-start">{{key}}</th>
+
+                        <td class="break-word">
+                            <i >{{value}}</i>
+                        </td>
+
+                    </tr>
+                                {% endfor %}
+
+                </tbody>
+            </table>
+                         {% endif %}
+            {% if pdf_true == 1 %}
+             <a href="{{ pdf_url }}" class="btn btn-primary">Download Spam Report</a>
+             {% endif %}
+            <div class="col-lg-8 col-12 mx-auto">
+                <h3 class="text-white text-center">Give us Feedback</h3>
+                <form method="post" novalidate>
+                {% csrf_token %}
+                <div class="mb-3">
+                    <textarea class="form-control" id="feedbackText" placeholder="Your feedback..." name="feedback" required></textarea>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Submit Feedback</button>
+                </div>
+                </form>
+            </div>
+        </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<section class="hero-section d-flex justify-content-center align-items-center"  id="section_2" >
+<h2  align="center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Your History :</h2>
+                <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12 mt-5">
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-8">
+                                                    <div class="table-responsive">
+                                                    <table class="table text-left">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width: 20%;">DateTime</th>
+                                                               <th style="width: 20%;">History Description</th>
+                                                            </tr>
+                                                        </thead>
+
+                                                        <tbody>
+                                                                          {% for value in history %}
+                                                            <tr>
+
+                                                                <td class="break-word">
+                                                                    <i >{{ value.1 }}</i>
+                                                                </td>
+                                                                    <td class="break-word">
+                                                                    <i >{{ value.2 }}</i>
+
+
+                                                            </tr>
+                                                                        {% endfor %}
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                     </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+</section>
+
+<!-- Your additional sections -->
+
+<footer class="site-footer section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-12 mb-4 pb-2">
+                <a class="navbar-brand mb-2" href="#">
+                    <i class="bi bi-shield-lock"></i>
+                    <span>Spam Detector</span>
+                </a>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6">
+                <h6 class="site-footer-title mb-3">Resources</h6>
+                <ul class="site-footer-links">
+                    <li class="site-footer-link-item"><a href="#" class="site-footer-link">Privacy Policy</a></li>
+                    <li class="site-footer-link-item"><a href="#" class="site-footer-link">Terms of Service</a></li>
+                    <li class="site-footer-link-item">
+                    <form method="post" action="{% url 'home' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="logout" value="1">
+                        <button type="submit" class="site-footer-link">Logout</button>
+                    </form>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6 mb-4 mb-lg-0">
+                <h6 class="site-footer-title mb-3">Contact</h6>
+                <p class="text-white d-flex mb-1">
+                    <a href="tel: 123-456-7890" class="site-footer-link">123-456-7890</a>
+                </p>
+                <p class="text-white d-flex">
+                    <a href="mailto:ourteam@spamdetector.com" class="site-footer-link">ourteam@spamdetector.com</a>
+                </p>
+            </div>
+
+        </div>
+    </div>
+</footer>
+
+
+<!-- JavaScript Files -->
+<script src="static/js/jquery.min.js"></script>
+<script src="static/js/bootstrap.bundle.min.js"></script>
+<script src="static/js/custom.js"></script>
+<script>
+        // JavaScript form validation
+        (function() {
+            'use strict';
+            var form = document.querySelector('form');
+            var urlInput = document.getElementById('url');
+
+            var resultDiv = document.getElementById('result');
+            var resultText = document.getElementById('result-text');
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+                resultDiv.style.display = 'none';
+
+                if (isValidUrl(urlInput.value)) {
+                    urlInput.classList.remove('is-invalid');
+                    form.submit();
+                } else {
+                    if (urlInput.value == ""){
+                     urlInput.classList.remove('is-invalid');
+                     form.submit();}
+                     else {
+                    urlInput.classList.add('is-invalid');}
+
+                }
+                form.classList.add('was-validated');
+            }, false);
+
+            urlInput.addEventListener('input', function() {
+                resultDiv.style.display = 'none';
+            });
+
+            function isValidUrl(url) {
+                var pattern = /^(?:(?:https?:\/\/)?(?:www\.)?)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\/[^?\s]*)?(?:\?[^#\s]*)?(?:#.*)?$/;
+                return pattern.test(url);
+
+
+            }
+            resultDiv.style.display = 'none';
+            // Display the result value if it exists
+            {% if result %}
+                resultDiv.style.display = 'block';
+                resultText.textContent = '{{ result }}';
+                resultText.className = '{{ result|lower }}';
+            {% endif %}
+        })();
+        document.getElementById('submissionForm').addEventListener('submit', function(event) {
+        var fileUpload = document.getElementById('fileUpload').value;
+        var urlInput = document.getElementById('url').value.trim();
+
+        // Check if both fields are empty
+        if (!fileUpload && !urlInput) {
+            // Prevent the form from submitting
+            event.preventDefault();
+            alert('Please provide at least one input: either a file or a URL.');
+        }
+        // Else, form submits normally as at least one input is given
+    });
+    </script>
+
+
+</body>
+</html>

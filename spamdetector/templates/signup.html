@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Spam Detector</title>
+    <!-- CSS Files -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans&display=swap" rel="stylesheet">
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/bootstrap-icons.css" rel="stylesheet">
+    <link href="static/css/templatemo-topic-listing.css" rel="stylesheet">
+     <link href="static/css/style.css" rel="stylesheet">
+</head>
+<body id="top">
+
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <i class="bi bi-shield-lock"></i>
+            <span>Spam Detector</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+    </div>
+</nav>
+
+<!-- Login Section -->
+<section id="signup" class="hero-section d-flex justify-content-center align-items-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-12 mx-auto">
+                <h1 class="text-center">Sign Up</h1>
+                <form method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <input  class="form-control" type="text" name="username" placeholder="Username" required>
+                    </div>
+                    <div class="mb-3">
+                        <input  class="form-control" type="email" name="email" placeholder="Email" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="password" class="form-control" id="passwordLogin" placeholder="Password" name="password" required>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary" name="signup">Sign Up</button>
+                        <a href="?action=login" >Login</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Your additional sections -->
+
+<footer class="site-footer section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-12 mb-4 pb-2">
+                <a class="navbar-brand mb-2" href="#">
+                    <i class="bi bi-shield-lock"></i>
+                    <span>Spam Detector</span>
+                </a>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6">
+                <h6 class="site-footer-title mb-3">Resources</h6>
+                <ul class="site-footer-links">
+                    <li class="site-footer-link-item"><a href="#" class="site-footer-link">Privacy Policy</a></li>
+                    <li class="site-footer-link-item"><a href="#" class="site-footer-link">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6 mb-4 mb-lg-0">
+                <h6 class="site-footer-title mb-3">Contact</h6>
+                <p class="text-white d-flex mb-1">
+                    <a href="tel: 123-456-7890" class="site-footer-link">123-456-7890</a>
+                </p>
+                <p class="text-white d-flex">
+                    <a href="mailto:ourteam@spamdetector.com" class="site-footer-link">ourteam@spamdetector.com</a>
+                </p>
+            </div>
+            <div class="col-lg-2 col-md-4 col-12 ms-auto">
+                <p class="copyright-text mt-lg-5 mt-4">Copyright © 2024 Spam Detector. All rights reserved.
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- JavaScript Files -->
+<script src="static/js/jquery.min.js"></script>
+<script src="static/js/bootstrap.bundle.min.js"></script>
+<script src="static/js/custom.js"></script>
+
+</body>
+</html>
