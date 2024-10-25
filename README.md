@@ -46,15 +46,3 @@
 
 <h3>Conclusion</h3>
 <p>The project aims to develop a robust, user-friendly solution for real-time spam URL detection through machine learning. The system’s adaptability, regular updates, and user feedback integration enhance its effectiveness against evolving spam techniques, contributing to a safer online environment.</p>
-
-<h3>Setup</h3>
-<p>Install:</p>
-<ul>
-    <li>django</li>
-    <li>requests</li>
-    <li>joblib</li>
-</ul>
-
-<h3>Run Tool</h3>
-<p>Run in terminal: <span style="color:red;">python manage.py runserver</span></p>
-
